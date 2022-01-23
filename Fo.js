@@ -162,15 +162,17 @@ function sendFiles(srcFilePath , dest , fileCategory ){
     let catPath = path.join(dest , fileCategory)
 
     if( fs.existsSync(catPath) == false){
-
         fs.mkdirSync(catPath)
-
     }
 
     let fileName = path.basename(srcFilePath);
     let destFilePath = path.join(catPath , fileName)
 
     fs.copyFileSync(srcFilePath,destFilePath)
+
+    fs.unlinkSync(srcFilePath)//Deleting the files which was present unorganised int the previous folder
+
+    console.log(fileName +"     is copied to       " + fileCategory)
 
 }
 
