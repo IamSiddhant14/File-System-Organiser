@@ -1,0 +1,11 @@
+{
+  "name": "file-system-organiser",
+  "version": "1.0.0",
+  "description": "organizes the files in your system",
+  "main": "Fo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "SIDDHANT SHARMA",
+  "license": "ISC"
+}
