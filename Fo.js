@@ -12,17 +12,20 @@
 
 // so at the end you will have a arranged set of files in specific folders
 
-//In the terminal we will write" node FO.js <--Siddhant-->"
+
 
 // Argv stands for argument vector
 
 ///////////////////////////////////////////////
 
+// In the terminal we will write" node Fo.js <-tree/organize/help--/> '<--path to the dir whose files need to be organized--/>'"
+// eg : node Fo.js organize 'C:\Users\Acer\Desktop\PROJECTS\File System Organiser\testfolder'
+
 // ALLWAYS OPEN THE INTEGRATED TERMINAL IN FO.JS FOLDER OR ONLY OR IT WOULD RESULT IN AN ERROR
 
 //////////////////////////////////////////////
 
-const fs = require('fs')
+const fs = require('fs')//here rember to put every thing inside require in " '' "
 const path = require('path')
 
 let inputArr = process.argv.slice(2);
@@ -43,7 +46,6 @@ let types = {
     
 };
 
-
 //This will only give us the second index of the character that is -- Siddhant
 // console.log(inputArr)
 
@@ -51,7 +53,6 @@ let command = inputArr[0]
 
 // var input = process.argv , This will give us the entire array that is -- node FO.js Siddhant
 // console.log(input)
-
 
 switch(command){
 
@@ -74,7 +75,7 @@ function helpfn(){
     console.log(`List of all the commands
                1) Tree command - node FO.js tree <dirname>
                2) Organize Command - node FO.js oraganize <dirname>
-               3) Help Command - node FO.js help `)
+               3) Help Command - node FO.js help `)//Her in this space is considered as well
 }
 
 // This function will create an folder named organized files in which we would be having sevrals files like that of media , document , app , archives where the files would be sorted in a proper manner
@@ -86,6 +87,7 @@ function organizeFn(dirpath){//input of a directory path
 
     if(dirpath == undefined){
         console.log('Please Enter a Directory Path')
+        // break is to break out of a loop like for, while, switch etc which you don't have here, you need to use return to break the execution flow of the current function and return to the caller.
         return;
     }else{
         let doesExist = fs.existsSync(dirpath)
@@ -108,7 +110,7 @@ function organizeFn(dirpath){//input of a directory path
     organizeHelper(dirpath, destPath)
 }
 
-//We are writting this function to categories outr files
+//We are writting this function to categories ourr files
 function organizeHelper(src , dest){
 
     //Name of files and folder inside the src
