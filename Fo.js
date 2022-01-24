@@ -26,8 +26,16 @@
 //////////////////////////////////////////////
 
 const { Console } = require('console');
+
+
 const fs = require('fs')//here rember to put every thing inside require in " '' "
 const path = require('path')
+
+const help = require('./commands/help')
+
+const organize = require('./commands/organize')
+
+const tree = require('./commands/tree')
 
 let inputArr = process.argv.slice(2);
 // let input = process.argv[2]
@@ -58,13 +66,13 @@ let command = inputArr[0]
 switch(command){
 
     case 'tree':
-        treeFn(inputArr[1])
+        tree.treekey(inputArr[1])
         break;
     case 'organize'://node Fo.js organize '<--Filepath of folder which we wish to organize-->'
-        organizeFn(inputArr[1])
+         organize.organizekey(inputArr[1])
         break;
     case 'help'://node Fo.js help
-        helpfn()
+        help.helpkey()//node Fo.js tree '<--Filepath of folder which we wish to organize-->'
         break;
     default:
         console.log("Please entre a valid input")
@@ -72,156 +80,15 @@ switch(command){
 
 }
 
-function helpfn(){
-    console.log(`List of all the commands
-               1) Tree command - node FO.js tree <dirname>
-               2) Organize Command - node FO.js oraganize <dirname>
-               3) Help Command - node FO.js help `)//Her in this space is considered as well
-}
+
 
 // This function will create an folder named organized files in which we would be having sevrals files like that of media , document , app , archives where the files would be sorted in a proper manner
 
  
-function organizeFn(dirpath){//input of a directory path
-
-    let destPath ;
-
-    if(dirpath == undefined){
-        console.log('Please Enter a Directory Path')
-        // break is to break out of a loop like for, while, switch etc which you don't have here, you need to use return to break the execution flow of the current function and return to the caller.
-        return;
-    }else{
-        let doesExist = fs.existsSync(dirpath)
-        // console.log(doesExist)
-
-        if(doesExist == true){
-            destPath = path.join(dirpath ,"organized_files")
-
-            if( fs.existsSync(destPath) == false ){
-                fs.mkdirSync(destPath)
-            }else{
-                console.log('This folder already exist')
-            }
-
-        }else{
-            console.log('Please entre a valid path')
-        }
-    }
-
-    organizeHelper(dirpath, destPath)
-}
-
-//We are writting this function to categories ourr files
-function organizeHelper(src , dest){
-
-    //Name of files and folder inside the src
-    let childNames = fs.readdirSync(src)
-
-    // console.log(childNames)
-
-    for( let i =0; i< childNames.length ; i++){
-
-        let childAddress = path.join(src , childNames[i])
-        // console.log(childAddress)
-
-        //Determing whther its a file or a directory
-        let isFile = fs.lstatSync(childAddress).isFile()
-        // console.log(isFile)
-
-        if( isFile == true){
-            let fileCategory = getCategory(childNames[i]);
-            // console.log("------ "+childNames[i]+" ----- "+ " belongs to " +" ---- "+fileCategory)
-
-            sendFiles(childAddress, dest , fileCategory)
-        }
-
-    }
-}
-
-function getCategory(name){
-    let ext = path.extname(name)
-    //Used to eleminate the dot in front of the extension name
-    ext = ext.slice(1)
-    // console.log(ext)
-
-    for( let key in types){
-        let cTypeArr = types[key]
-
-        for(let i =0; i<cTypeArr.length ; i++){
-            if( ext == cTypeArr[i]){
-                //We match the extension with the values present in cTypeArr
-
-                return key
-            }
-
-        }
-    }
-
-}
-
-function sendFiles(srcFilePath , dest , fileCategory ){
-    let catPath = path.join(dest , fileCategory)
-
-    if( fs.existsSync(catPath) == false){
-        fs.mkdirSync(catPath)
-    }
-
-    let fileName = path.basename(srcFilePath);
-    let destFilePath = path.join(catPath , fileName)
-
-    fs.copyFileSync(srcFilePath,destFilePath)
-    
-    //Deleting the files which was present unorganised int the previous folder
-    fs.unlinkSync(srcFilePath)
-
-    console.log(fileName +"     is copied to       " + fileCategory)
-
-}
 
 
-function treeFn(dirpath){
-
-    if(dirpath == undefined){
-        Console.log("Please entre a valid Command")
-    }else{
-        let doesExist = fs.existsSync(dirpath)
-        if(doesExist == true){
-            treeHelper(dirpath," ")
-        }else{
-            console.log("Please entre a valid directory name")
-        }
-    }
-
-    // treeHelper(dirpath, " ")
-
-}
-
-function treeHelper(targetPath , indent){
-      
-    //This is to determine whether the link given is of an folder path or its an file path
-    let isFile = fs.lstatSync(targetPath).isFile()
-
-    if(isFile == true){
-        //To determine file name
-        let filename = path.basename(targetPath)
-        console.log(indent +"├──"+filename)
-
-    }else{
-        let dirName = path.basename(targetPath)
-        console.log(indent + "└──"+ dirName)
-
-        let children = fs.readdirSync(targetPath)
-        // console.log(children) 
-
-        for(let i =0; i<children.length; i++){
-            let childPath = path.join(targetPath, children[i])
-            treeHelper(childPath , indent +'\t')
-        }
-
-    }
 
 
-}
 
 
 
