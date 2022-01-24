@@ -25,6 +25,7 @@
 
 //////////////////////////////////////////////
 
+const { Console } = require('console');
 const fs = require('fs')//here rember to put every thing inside require in " '' "
 const path = require('path')
 
@@ -57,7 +58,7 @@ let command = inputArr[0]
 switch(command){
 
     case 'tree':
-        console.log('Tree implemented')
+        treeFn(inputArr[1])
         break;
     case 'organize'://node Fo.js organize '<--Filepath of folder which we wish to organize-->'
         organizeFn(inputArr[1])
@@ -169,10 +170,56 @@ function sendFiles(srcFilePath , dest , fileCategory ){
     let destFilePath = path.join(catPath , fileName)
 
     fs.copyFileSync(srcFilePath,destFilePath)
-
-    fs.unlinkSync(srcFilePath)//Deleting the files which was present unorganised int the previous folder
+    
+    //Deleting the files which was present unorganised int the previous folder
+    fs.unlinkSync(srcFilePath)
 
     console.log(fileName +"     is copied to       " + fileCategory)
+
+}
+
+
+function treeFn(dirpath){
+
+    if(dirpath == undefined){
+        Console.log("Please entre a valid Command")
+    }else{
+        let doesExist = fs.existsSync(dirpath)
+        if(doesExist == true){
+            treeHelper(dirpath," ")
+        }else{
+            console.log("Please entre a valid directory name")
+        }
+    }
+
+    // treeHelper(dirpath, " ")
+
+}
+
+function treeHelper(targetPath , indent){
+      
+    //This is to determine whether the link given is of an folder path or its an file path
+    let isFile = fs.lstatSync(targetPath).isFile()
+
+    if(isFile == true){
+        //To determine file name
+        let filename = path.basename(targetPath)
+        console.log(indent +"├──"+filename)
+
+    }else{
+        let dirName = path.basename(targetPath)
+        console.log(indent + "└──"+ dirName)
+
+        let children = fs.readdirSync(targetPath)
+        // console.log(children) 
+
+        for(let i =0; i<children.length; i++){
+            let childPath = path.join(targetPath, children[i])
+            treeHelper(childPath , indent +'\t')
+        }
+
+    }
+
 
 }
 
