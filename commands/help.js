@@ -8,3 +8,4 @@ function helpfn(){
 module.exports = {//never call the function in an object instead just pass its name and dont call it
     helpkey : helpfn
 }
+
