@@ -33,7 +33,7 @@ function treeHelper(targetPath , indent){
         console.log(indent + "└──"+ dirName)
 
         let children = fs.readdirSync(targetPath)
-        // console.log(children) 
+        // console.log(children) , as it will result in an array 
 
         for(let i =0; i<children.length; i++){
             let childPath = path.join(targetPath, children[i])
