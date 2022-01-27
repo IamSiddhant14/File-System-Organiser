@@ -51,6 +51,7 @@ function organizeHelper(src , dest){
     let childNames = fs.readdirSync(src)
 
     // console.log(childNames)
+    // This will result in an array
 
     for( let i =0; i< childNames.length ; i++){
 
@@ -63,9 +64,10 @@ function organizeHelper(src , dest){
 
         if( isFile == true){
             let fileCategory = getCategory(childNames[i]);
+
             // console.log("------ "+childNames[i]+" ----- "+ " belongs to " +" ---- "+fileCategory)
 
-            sendFiles(childAddress, dest , fileCategory)
+            sendFiles(childAddress, dest , fileCategory);
         }
 
     }
@@ -105,7 +107,7 @@ function sendFiles(srcFilePath , dest , fileCategory ){
     fs.copyFileSync(srcFilePath,destFilePath)
     
     //Deleting the files which was present unorganised int the previous folder
-    fs.unlinkSync(srcFilePath)
+    // fs.unlinkSync(srcFilePath)
 
     console.log(fileName +"     is copied to       " + fileCategory)
 
