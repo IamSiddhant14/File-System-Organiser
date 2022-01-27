@@ -1,6 +1,6 @@
 {
   "name": "file-system-organiser-from-un-org-to-org",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "organizes the files in your system",
   "main": "Fo.js",
   "scripts": {
