@@ -25,9 +25,6 @@
 
 //////////////////////////////////////////////
 
-const { Console } = require('console');
-
-
 const fs = require('fs')//here rember to put every thing inside require in " '' "
 const path = require('path')
 
@@ -39,6 +36,7 @@ const tree = require('./commands/tree')
 
 let inputArr = process.argv.slice(2);
 // let input = process.argv[2]
+// This will only give us the second index of the character 
 
 
 let types = {
@@ -55,7 +53,7 @@ let types = {
     
 };
 
-//This will only give us the second index of the character that is -- Siddhant
+
 // console.log(inputArr)
 
 let command = inputArr[0]
@@ -79,6 +77,7 @@ switch(command){
         break;
 
 }
+
 
 
 
