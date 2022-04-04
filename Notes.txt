@@ -1,0 +1,4 @@
+To initate a node project in the terminal write "npm init"
+To install any external libary which is not not present(fs , path are build in modules) in the node itself , in the CMD write "npm install <--libary name --/>"
+To run a file using node runtime enviroment in the cmd write " node <--fileName --/> <--parameter--/>
+
